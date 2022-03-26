@@ -48,14 +48,18 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .pytest_cache
 
 lint/flake8: ## check style with flake8
-	flake8 arraydebug tests
+    # stop the build if there are Python syntax errors or undefined names
+	flake8 arraydebug tests --count --select=E9,F63,F7,F82 --show-source --statistics
+    # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+	flake8 arraydebug tests --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
 lint/black: ## check style with black
-	black --check arraydebug tests
+	black arraydebug tests --check --line-length=127
 
 lint: lint/flake8 lint/black ## check style
 
 test: ## run tests quickly with the default Python
-	pytest
+	pytest --cov=arraydebug --doctest-modules
 
 test-all: ## run tests on every Python version with tox
 	tox

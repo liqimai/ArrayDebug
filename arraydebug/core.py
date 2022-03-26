@@ -29,7 +29,7 @@ def register_reprs() -> None:
 _default_repr = _builtins.repr
 
 
-def _new_repr(obj, /) -> str:
+def _new_repr(obj) -> str:
     if type(obj) in repr_fn_table:
         return repr_fn_table[type(obj)](obj)
     elif not isinstance(obj, type) and "__array__" in dir(obj):

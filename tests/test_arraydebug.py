@@ -8,6 +8,10 @@ import arraydebug
 
 
 class TestArraydebug(unittest.TestCase):
+    def setUp(self) -> None:
+        arraydebug.register_reprs()
+        arraydebug.inject_repr()
+
     def tearDown(self) -> None:
         arraydebug.inject_repr()
 

@@ -25,6 +25,7 @@ setup(
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Natural Language :: English",
+        "Operating System :: OS Independent",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
@@ -39,10 +40,14 @@ setup(
     include_package_data=True,
     keywords="arraydebug",
     name="arraydebug",
-    packages=find_packages(include=["arraydebug", "arraydebug.*"]),
+    package_dir={"": "src"},
+    packages=find_packages(where="src", include=["arraydebug", "arraydebug.*"]),
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/liqimai/arraydebug",
+    project_urls={
+        "Bug Tracker": "https://github.com/liqimai/arraydebug/issues",
+    },
     version="0.1.0",
     zip_safe=False,
 )

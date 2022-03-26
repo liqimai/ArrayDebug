@@ -6,6 +6,10 @@ import arraydebug  # noqa
 
 
 class TestNumpy(unittest.TestCase):
+    def setUp(self) -> None:
+        arraydebug.register_reprs()
+        arraydebug.inject_repr()
+
     def test_1D(self):
         """
         <ndarray: shape=(4,), dtype=int64>

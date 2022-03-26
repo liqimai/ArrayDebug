@@ -6,7 +6,7 @@ from inspect import cleandoc
 import arraydebug  # noqa
 
 
-class TestNumpy(unittest.TestCase):
+class TestArrayLike(unittest.TestCase):
     def test_pd_dataframe(self):
         """
         <DataFrame: shape=(6, 4), dtype=int64>

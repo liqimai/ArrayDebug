@@ -5,7 +5,11 @@ from inspect import cleandoc
 import arraydebug  # noqa
 
 
-class TestNumpy(unittest.TestCase):
+class TestTorch(unittest.TestCase):
+    def setUp(self) -> None:
+        arraydebug.register_reprs()
+        arraydebug.inject_repr()
+
     def test_1D(self):
         """
         <Tensor: shape=(4,), dtype=int64, device='cpu'>

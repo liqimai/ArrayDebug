@@ -1,4 +1,4 @@
-.PHONY: clean clean-build clean-pyc clean-test coverage dist docs help install lint lint/flake8 lint/black
+.PHONY: clean clean-build clean-pyc clean-test coverage dist docs help install lint lint/flake8 lint/black test-install
 .DEFAULT_GOAL := help
 
 define BROWSER_PYSCRIPT
@@ -29,11 +29,11 @@ help:
 clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
 
 clean-build: ## remove build artifacts
-	# rm -fr build/
-	# rm -fr dist/
-	# rm -fr .eggs/
-	# find . -name '*.egg-info' -exec rm -fr {} +
-	# find . -name '*.egg' -exec rm -f {} +
+#	rm -fr build/
+#	rm -fr dist/
+#	rm -fr .eggs/
+#	find . -name '*.egg-info' -exec rm -fr {} +
+#	find . -name '*.egg' -exec rm -f {} +
 	python setup.py clean --all
 
 clean-pyc: ## remove Python file artifacts
@@ -50,23 +50,26 @@ clean-test: ## remove test and coverage artifacts
 
 lint/flake8: ## check style with flake8
     # stop the build if there are Python syntax errors or undefined names
-	flake8 arraydebug tests --count --select=E9,F63,F7,F82 --show-source --statistics
+	flake8 src/arraydebug tests examples --count --select=E9,F63,F7,F82 --show-source --statistics
     # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-	flake8 arraydebug tests --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	flake8 src/arraydebug tests examples --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
 lint/black: ## check style with black
-	black arraydebug tests --check --line-length=127
+	black src/arraydebug tests examples --check --line-length=127
 
 lint: lint/flake8 lint/black ## check style
 
 test: ## run tests quickly with the default Python
-	pytest --cov=arraydebug --doctest-modules
+	pytest src tests --cov=arraydebug --doctest-modules
 
-test-all: ## run tests on every Python version with tox
-	tox
+# test-all: ## run tests on every Python version with tox
+# 	tox
+
+test-install: install ## install the package and test the installed version
+	PY_IGNORE_IMPORTMISMATCH=1 pytest tests src --cov=arraydebug --doctest-modules
 
 coverage: ## check code coverage quickly with the default Python
-	coverage run --source arraydebug -m pytest --doctest-modules
+	coverage run --source arraydebug -m pytest src tests --doctest-modules
 	coverage report -m
 	coverage html
 	$(BROWSER) htmlcov/index.html

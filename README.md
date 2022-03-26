@@ -38,7 +38,8 @@ It works with all debuggers which rely on `repr` function to display variable in
 <!-- TODO: add PyCharm support -->
 
 ### VSCode
-![](./images/vscode.png)
+![](https://raw.githubusercontent.com/liqimai/arraydebug/master/images/vscode.png)
+
 
 ### IPython
 ```ipython

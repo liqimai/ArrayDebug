@@ -29,11 +29,12 @@ help:
 clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
 
 clean-build: ## remove build artifacts
-	rm -fr build/
-	rm -fr dist/
-	rm -fr .eggs/
-	find . -name '*.egg-info' -exec rm -fr {} +
-	find . -name '*.egg' -exec rm -f {} +
+	# rm -fr build/
+	# rm -fr dist/
+	# rm -fr .eggs/
+	# find . -name '*.egg-info' -exec rm -fr {} +
+	# find . -name '*.egg' -exec rm -f {} +
+	python setup.py clean --all
 
 clean-pyc: ## remove Python file artifacts
 	find . -name '*.pyc' -exec rm -f {} +
@@ -65,7 +66,7 @@ test-all: ## run tests on every Python version with tox
 	tox
 
 coverage: ## check code coverage quickly with the default Python
-	coverage run --source arraydebug -m pytest
+	coverage run --source arraydebug -m pytest --doctest-modules
 	coverage report -m
 	coverage html
 	$(BROWSER) htmlcov/index.html

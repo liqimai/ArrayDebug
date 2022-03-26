@@ -2,17 +2,25 @@
 
 """Tests for `arraydebug` package."""
 
+import numpy as np
 import unittest
+import arraydebug
 
 
 class TestArraydebug(unittest.TestCase):
-    """Tests for `arraydebug` package."""
+    def tearDown(self) -> None:
+        arraydebug.inject_repr()
 
-    def setUp(self):
-        """Set up test fixtures, if any."""
+    def test(self):
+        self.assertEqual(repr(1), "1")
+        self.assertEqual(repr("abc"), "'abc'")
+        self.assertEqual(repr([1, 2, 3, 4]), "[1, 2, 3, 4]")
 
-    def tearDown(self):
-        """Tear down test fixtures, if any."""
+    def test_recover_repr(self):
+        arr = np.arange(4)
 
-    def test_000_something(self):
-        """Test something."""
+        arraydebug.inject_repr()
+        self.assertEqual(repr(arr), "<ndarray: shape=(4,), dtype=int64>\narray([0, 1, 2, 3])")
+
+        arraydebug.recover_repr()
+        self.assertEqual(repr(arr), "array([0, 1, 2, 3])")

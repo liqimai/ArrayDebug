@@ -2,3 +2,5 @@ flake8
 black
 pytest
 pytest-cov
+pandas
+torch

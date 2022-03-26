@@ -49,6 +49,6 @@ setup(
     project_urls={
         "Bug Tracker": "https://github.com/liqimai/arraydebug/issues",
     },
-    version='0.1.0',
-    zip_safe=False,
+    version="0.1.0",
+    zip_safe=True,
 )

@@ -8,7 +8,7 @@ from arraydebug.core import (  # noqa
 
 __author__ = """Qimai Li"""
 __email__ = "liqimai@qq.com"
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 
 register_reprs()

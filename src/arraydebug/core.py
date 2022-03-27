@@ -43,6 +43,7 @@ def recover_repr() -> None:
 
 
 def inject_repr() -> None:
+    register_reprs()
     _builtins.repr = _new_repr
 
 

@@ -27,3 +27,12 @@ class TestArraydebug(unittest.TestCase):
 
         arraydebug.disable()
         self.assertEqual(repr(arr), "array([0, 1, 2, 3])")
+
+    def test_register_repr(self):
+        class A:
+            def __init__(self, x):
+                self.x = x
+
+        info_fn = lambda a: f"<class A object with x={a.x}>"
+        arraydebug.register_repr(A, info_fn)
+        self.assertEqual(repr(A(5)), "<class A object with x=5>")

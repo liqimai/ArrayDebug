@@ -9,22 +9,21 @@ import arraydebug
 
 class TestArraydebug(unittest.TestCase):
     def setUp(self) -> None:
-        arraydebug.register_reprs()
-        arraydebug.inject_repr()
+        arraydebug.enable()
 
     def tearDown(self) -> None:
-        arraydebug.inject_repr()
+        arraydebug.enable()
 
     def test(self):
         self.assertEqual(repr(1), "1")
         self.assertEqual(repr("abc"), "'abc'")
         self.assertEqual(repr([1, 2, 3, 4]), "[1, 2, 3, 4]")
 
-    def test_recover_repr(self):
+    def test_enable(self):
         arr = np.arange(4)
 
-        arraydebug.inject_repr()
+        arraydebug.enable()
         self.assertEqual(repr(arr), "<ndarray: shape=(4,), dtype=int64>\narray([0, 1, 2, 3])")
 
-        arraydebug.recover_repr()
+        arraydebug.disable()
         self.assertEqual(repr(arr), "array([0, 1, 2, 3])")

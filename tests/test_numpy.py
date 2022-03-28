@@ -7,8 +7,7 @@ import arraydebug  # noqa
 
 class TestNumpy(unittest.TestCase):
     def setUp(self) -> None:
-        arraydebug.register_reprs()
-        arraydebug.inject_repr()
+        arraydebug.enable()
 
     def test_1D(self):
         """

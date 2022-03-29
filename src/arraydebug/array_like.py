@@ -21,7 +21,9 @@ def array_like_info(array_like) -> str:
     2013-01-05  1016  1017  1018  1019
     2013-01-06  1020  1021  1022  1023
     """
-    array = array_like.__array__()
-    return f"""\
-<{array_like.__class__.__name__}: shape={array.shape}, dtype={array.dtype}>
-{array_like.__repr__()}"""
+    try:
+        array = array_like.__array__()
+        info = f"<{array_like.__class__.__name__}: shape={array.shape}, dtype={array.dtype}>\n"
+    except:
+        info = ""
+    return f"""{info}{array_like.__repr__()}"""

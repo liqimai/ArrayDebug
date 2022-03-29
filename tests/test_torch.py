@@ -7,8 +7,7 @@ import arraydebug  # noqa
 
 class TestTorch(unittest.TestCase):
     def setUp(self) -> None:
-        arraydebug.register_reprs()
-        arraydebug.inject_repr()
+        arraydebug.enable()
 
     def test_1D(self):
         """
@@ -61,3 +60,41 @@ class TestTorch(unittest.TestCase):
         arr = torch.arange(3 * 4, dtype=torch.float64).reshape(3, 4)
         arr.requires_grad_(True)
         self.assertEqual(repr(arr), cleandoc(self.test_requires_grad.__doc__))
+
+
+class TestTorchWithoutArrayDebug(unittest.TestCase):
+    def setUp(self) -> None:
+        # disable customized repr function for torch.Tensor
+        del arraydebug.repr_fn_table[torch.Tensor]
+
+    def tearDown(self) -> None:
+        from arraydebug.torch import tensor_info
+
+        arraydebug.register_repr(torch.Tensor, tensor_info)
+
+    def test_no_grad(self):
+        # without customized repr, `torch.Tensor` degrades to a normal
+        # array_like object.
+        """
+        <Tensor: shape=(3, 4), dtype=int64>
+        tensor([[ 0,  1,  2,  3],
+                [ 4,  5,  6,  7],
+                [ 8,  9, 10, 11]])
+        """
+        arr = torch.arange(3 * 4).reshape(3, 4)
+        self.assertEqual(repr(arr), cleandoc(self.test_no_grad.__doc__))
+
+    def test_grad(self):
+        # Without customized repr, `torch.Tensor` degrades to a normal
+        # array_like object, which relies on `tensor.__array__()` to get
+        # the info. However, `tensor.__array__()` throws exception when
+        # `tensor.requires_grad == True`, and thus `repr(tensor)`
+        # behaves same as vanilla `repr` function.
+        """
+        tensor([[ 0.,  1.,  2.,  3.],
+                [ 4.,  5.,  6.,  7.],
+                [ 8.,  9., 10., 11.]], dtype=torch.float64, requires_grad=True)
+        """
+        arr = torch.arange(3 * 4, dtype=torch.float64).reshape(3, 4)
+        arr.requires_grad_(True)
+        self.assertEqual(repr(arr), cleandoc(self.test_grad.__doc__))

@@ -38,11 +38,12 @@ def _new_repr(obj) -> str:
         return _default_repr(obj)
 
 
-def recover_repr() -> None:
+def disable() -> None:
     _builtins.repr = _default_repr
 
 
-def inject_repr() -> None:
+def enable() -> None:
+    register_reprs()
     _builtins.repr = _new_repr
 
 

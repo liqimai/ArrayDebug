@@ -7,7 +7,7 @@ from arraydebug.core import (  # noqa
 
 __author__ = """Qimai Li"""
 __email__ = "liqimai@qq.com"
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 
 enable()

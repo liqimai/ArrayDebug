@@ -1,7 +1,7 @@
 # ArrayDebug
 
 [![image](https://img.shields.io/pypi/v/arraydebug.svg)](https://pypi.python.org/pypi/arraydebug)
-![buld](https://github.com/liqimai/arraydebug/actions/workflows/build.yaml/badge.svg)
+![build](https://github.com/liqimai/arraydebug/actions/workflows/build.yaml/badge.svg)
 [![Updates](https://pyup.io/repos/github/liqimai/arraydebug/shield.svg)](https://pyup.io/repos/github/liqimai/arraydebug/)
 [![support-version](https://img.shields.io/pypi/pyversions/arraydebug)](https://img.shields.io/pypi/pyversions/arraydebug)
 <!-- [![Documentation Status](https://readthedocs.org/projects/arraydebug/badge/?version=latest)](https://arraydebug.readthedocs.io/en/latest/?version=latest) -->
@@ -13,16 +13,23 @@ objects.
 -   Support python 3.6+
 <!-- -   Documentation: <https://arraydebug.readthedocs.io>. -->
 
-## Usage
 
-All you need is to `import arraydebug` after `numpy`, `torch`, `pandas`, etc.
+## Installation
+
+```shell
+$ pip install arraydebug
+```
+
+## Get Started
+
+All you need is to `import arraydebug` __after__ numpy, torch, pandas, etc.
 
 ```python
->>> import numpy as np
->>> import torch
->>> import pandas as pd
->>> ...
->>> import arraydebug # import at last
+import numpy as np
+import torch
+import pandas as pd
+...
+import arraydebug # import at last
 ```
 
 Then you will get information of the array-like object shown in the debugger, like:
@@ -42,7 +49,7 @@ It works with all debuggers which rely on `repr` function to display variable in
 
 
 ### IPython
-```ipython
+```python
 In [1]: import torch
 
 In [2]: import arraydebug
@@ -90,7 +97,72 @@ tensor([[<span class="pl-c1">1.</span>, 1., 1., 1.],
         [1., 1., 1., 1.]], requires_grad=True)</code>
 </pre> -->
 
+## Usage
 
+Import `arraydebug` __after__ numpy, torch, pandas, etc.
+
+```python
+import torch
+import arraydebug # import at last
+```
+Then you will get information of the array-like object shown in the debugger, like:
+```
+<Tensor: shape=(6, 4), dtype=float32, device='cpu', requires_grad=True>
+```
+
+ArrayDebug searches imported packages for array_like objects, and provides debug information for them. So, it important to import `arraydebug` after them.
+
+
+### How does it work?
+Behind the hood, this is achieved by modifying behavior of `repr()`. So, all debuggers that relies on `repr()` will display the debug information.
+
+```python
+>>> import torch
+>>> import arraydebug
+>>> tensor = torch.ones(3, requires_grad=True)
+>>> print(repr(tensor))
+<Tensor: shape=(3,), dtype=float32, device='cpu', requires_grad=True>
+tensor([1., 1., 1.], requires_grad=True)
+```
+
+### Enable and disable
+To recover the vanilla `repr()`, you may disable ArrayDebug by `disable()`,
+```python
+>>> arraydebug.disable()
+>>> print(repr(tensor))
+tensor([1., 1., 1.], requires_grad=True)
+```
+
+or enable ArrayDebug again by `enable()`.
+```python
+>>> arraydebug.enable()
+>>> print(repr(tensor))
+<Tensor: shape=(3,), dtype=float32, device='cpu', requires_grad=True>
+tensor([1., 1., 1.], requires_grad=True)
+```
+
+This is also useful when you import some modules after ArrayDebug, and want to enable ArrayDebug for them:
+```python
+>>> import arraydebug
+>>> import torch
+>>> print(repr(torch.ones(3, requires_grad=True)))
+<Tensor: shape=(3,), dtype=float32, device='cpu', requires_grad=True>
+tensor([1., 1., 1.], requires_grad=True)
+```
+
+### Customize
+
+You can register your own debug info by `register_repr()`.
+```python
+>>> class A:
+...     def __init__(self, x):
+...         self.x = x
+...
+>>> info_fn = lambda a: f'<class A object with x={a.x}>'
+>>> arraydebug.register_repr(A, info_fn)
+>>> print(repr(A(5)))
+<class A object with x=5>
+```
 
 ## Credits
 

@@ -14,8 +14,8 @@ class TestTorch(unittest.TestCase):
         <Tensor: shape=(4,), dtype=int64, device='cpu'>
         tensor([0, 1, 2, 3])
         """
-        arr = torch.arange(4)
-        self.assertEqual(repr(arr), cleandoc(self.test_1D.__doc__))
+        tensor = torch.arange(4)
+        assert repr(tensor) == cleandoc(self.test_1D.__doc__)
 
     def test_1D_long(self):
         """
@@ -23,8 +23,8 @@ class TestTorch(unittest.TestCase):
         tensor([0.0000e+00, 1.0000e+00, 2.0000e+00,  ..., 9.9970e+03, 9.9980e+03,
                 9.9990e+03])
         """
-        arr = torch.arange(10000, dtype=torch.float32)
-        self.assertEqual(repr(arr), cleandoc(self.test_1D_long.__doc__))
+        tensor = torch.arange(10000, dtype=torch.float32)
+        assert repr(tensor) == cleandoc(self.test_1D_long.__doc__)
 
     def test_2D(self):
         """
@@ -33,8 +33,8 @@ class TestTorch(unittest.TestCase):
                 [ 4,  5,  6,  7],
                 [ 8,  9, 10, 11]])
         """
-        arr = torch.arange(3 * 4).reshape(3, 4)
-        self.assertEqual(repr(arr), cleandoc(self.test_2D.__doc__))
+        tensor = torch.arange(3 * 4).reshape(3, 4)
+        assert repr(tensor) == cleandoc(self.test_2D.__doc__)
 
     def test_2D_long(self):
         """
@@ -47,8 +47,8 @@ class TestTorch(unittest.TestCase):
                 [9800, 9801, 9802,  ..., 9897, 9898, 9899],
                 [9900, 9901, 9902,  ..., 9997, 9998, 9999]])
         """
-        arr = torch.arange(10000).reshape(100, 100)
-        self.assertEqual(repr(arr), cleandoc(self.test_2D_long.__doc__))
+        tensor = torch.arange(10000).reshape(100, 100)
+        assert repr(tensor) == cleandoc(self.test_2D_long.__doc__)
 
     def test_requires_grad(self):
         """
@@ -57,9 +57,9 @@ class TestTorch(unittest.TestCase):
                 [ 4.,  5.,  6.,  7.],
                 [ 8.,  9., 10., 11.]], dtype=torch.float64, requires_grad=True)
         """
-        arr = torch.arange(3 * 4, dtype=torch.float64).reshape(3, 4)
-        arr.requires_grad_(True)
-        self.assertEqual(repr(arr), cleandoc(self.test_requires_grad.__doc__))
+        tensor = torch.arange(3 * 4, dtype=torch.float64).reshape(3, 4)
+        tensor.requires_grad_(True)
+        assert repr(tensor) == cleandoc(self.test_requires_grad.__doc__)
 
 
 class TestTorchWithoutArrayDebug(unittest.TestCase):
@@ -81,8 +81,8 @@ class TestTorchWithoutArrayDebug(unittest.TestCase):
                 [ 4,  5,  6,  7],
                 [ 8,  9, 10, 11]])
         """
-        arr = torch.arange(3 * 4).reshape(3, 4)
-        self.assertEqual(repr(arr), cleandoc(self.test_no_grad.__doc__))
+        tensor = torch.arange(3 * 4).reshape(3, 4)
+        assert repr(tensor) == cleandoc(self.test_no_grad.__doc__)
 
     def test_grad(self):
         # Without customized repr, `torch.Tensor` degrades to a normal
@@ -95,6 +95,6 @@ class TestTorchWithoutArrayDebug(unittest.TestCase):
                 [ 4.,  5.,  6.,  7.],
                 [ 8.,  9., 10., 11.]], dtype=torch.float64, requires_grad=True)
         """
-        arr = torch.arange(3 * 4, dtype=torch.float64).reshape(3, 4)
-        arr.requires_grad_(True)
-        self.assertEqual(repr(arr), cleandoc(self.test_grad.__doc__))
+        tensor = torch.arange(3 * 4, dtype=torch.float64).reshape(3, 4)
+        tensor.requires_grad_(True)
+        assert repr(tensor) == cleandoc(self.test_grad.__doc__)

@@ -15,7 +15,7 @@ class TestNumpy(unittest.TestCase):
         array([0, 1, 2, 3])
         """
         arr = np.arange(4)
-        self.assertEqual(repr(arr), cleandoc(self.test_1D.__doc__))
+        assert repr(arr) == cleandoc(self.test_1D.__doc__)
 
     def test_1D_long(self):
         """
@@ -24,7 +24,7 @@ class TestNumpy(unittest.TestCase):
                9.999e+03], dtype=float32)
         """
         arr = np.arange(10000, dtype=np.float32)
-        self.assertEqual(repr(arr), cleandoc(self.test_1D_long.__doc__))
+        assert repr(arr) == cleandoc(self.test_1D_long.__doc__)
 
     def test_2D(self):
         """
@@ -34,7 +34,7 @@ class TestNumpy(unittest.TestCase):
                [ 8,  9, 10, 11]])
         """
         arr = np.arange(3 * 4).reshape(3, 4)
-        self.assertEqual(repr(arr), cleandoc(self.test_2D.__doc__))
+        assert repr(arr) == cleandoc(self.test_2D.__doc__)
 
     def test_2D_long(self):
         """
@@ -48,4 +48,4 @@ class TestNumpy(unittest.TestCase):
                [9900, 9901, 9902, ..., 9997, 9998, 9999]])
         """
         arr = np.arange(10000).reshape(100, 100)
-        self.assertEqual(repr(arr), cleandoc(self.test_2D_long.__doc__))
+        assert repr(arr) == cleandoc(self.test_2D_long.__doc__)

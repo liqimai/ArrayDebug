@@ -23,4 +23,4 @@ class TestArrayLike(unittest.TestCase):
             index=pd.date_range("20130101", periods=6),
             columns=list("ABCD"),
         )
-        self.assertEqual(repr(df), cleandoc(self.test_pd_dataframe.__doc__))
+        assert repr(df) == cleandoc(self.test_pd_dataframe.__doc__)
